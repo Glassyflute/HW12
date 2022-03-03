@@ -1,0 +1,3 @@
+class DataLoadError(Exception):
+    pass
+

@@ -1,32 +1,21 @@
-from flask import Flask, request, render_template, send_from_directory
-# from functions import ...
+from flask import Flask, Blueprint, render_template, send_from_directory
+from functions import PostsManager
+
+# импортируем блюпринт
+from loader.views_loader import loader_blueprint
+from main.views_main import main_blueprint
 
 POST_PATH = "posts.json"
 UPLOAD_FOLDER = "uploads/images"
 
 app = Flask(__name__)
 
-
-@app.route("/")
-def page_index():
-    pass
-
-
-@app.route("/list")
-def page_tag():
-    pass
+# регистрируем блюпринты
+app.register_blueprint(main_blueprint)
+app.register_blueprint(loader_blueprint)
 
 
-@app.route("/post", methods=["GET", "POST"])
-def page_post_form():
-    pass
-
-
-@app.route("/post", methods=["POST"])
-def page_post_upload():
-    pass
-
-
+# # доступ к папке uploads, чтобы внешний клиент видел
 @app.route("/uploads/<path:path>")
 def static_dir(path):
     return send_from_directory("uploads", path)
